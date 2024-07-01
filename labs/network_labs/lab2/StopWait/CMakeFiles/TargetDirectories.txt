@@ -1,0 +1,3 @@
+/home/peacewang/sources/network/lab2/StopWait/CMakeFiles/rebuild_cache.dir
+/home/peacewang/sources/network/lab2/StopWait/CMakeFiles/SR.dir
+/home/peacewang/sources/network/lab2/StopWait/CMakeFiles/edit_cache.dir

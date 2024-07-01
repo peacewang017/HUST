@@ -1,0 +1,22 @@
+/* Body background color */
+body {
+    background-color: #401570;
+}
+
+/* Header styling */
+.header {
+    background-color: #401570;
+    color: #401570;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Link styling */
+a {
+    color: #401570;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
