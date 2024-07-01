@@ -3,5 +3,5 @@
 ## lab
 /lab 为课程的实验。
 
-## projects
-/projects 为课程设计。
+## project
+/project 为课程设计。
