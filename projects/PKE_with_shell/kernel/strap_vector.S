@@ -37,7 +37,7 @@ smode_trap_vector:
     # load the address of smode_trap_handler() from p->trapframe->kernel_trap
     ld t0, 256(a0)
 
-    # restore kernel page table from p->trapframe->kernel_satp. added @lab2_1
+    # restore kernel page table from p->trapframe->kernel_satp.
     ld t1, 272(a0)
     csrw satp, t1
     sfence.vma zero, zero
@@ -56,7 +56,7 @@ return_to_user:
     # a0: TRAPFRAME
     # a1: user page table, for satp.
 
-    # switch to the user page table. added @lab2_1
+    # switch to the user page table.
     csrw satp, a1
     sfence.vma zero, zero
 

@@ -1,5 +1,5 @@
 /*
- * Interface functions between file system and kernel/processes. added @lab4_1
+ * Interface functions between file system and kernel/processes.
  */
 
 #include "proc_file.h"

@@ -1,5 +1,5 @@
 /*
- * Utility functions operating the devices. support only RAM disk device. added @lab4_1.
+ * Utility functions operating the devices. support only RAM disk device.
  */
 
 #include "ramdev.h"

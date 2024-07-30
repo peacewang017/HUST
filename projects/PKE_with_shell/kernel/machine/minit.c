@@ -13,8 +13,7 @@
 // stack0 is the privilege mode stack(s) of the proxy kernel on CPU(s)
 // allocates 4KB stack space for each processor (hart)
 //
-// NCPU is defined to be 1 in kernel/config.h, as we consider only one HART in basic
-// labs.
+// NCPU is defined to be 1 in kernel/config.h
 //
 __attribute__((aligned(16))) char stack0[4096 * NCPU];
 
@@ -103,7 +102,7 @@ void m_start(uintptr_t hartid, uintptr_t dtb) {
 
   sprint("In m_start, hartid:%d\n", hartid);
 
-  // save the address of trap frame for interrupt in M mode to "mscratch". added @lab1_2
+  // save the address of trap frame for interrupt in M mode to "mscratch".
   write_csr(mscratch, &g_itrframe);
 
   // set previous privilege mode to S (Supervisor), and will enter S mode after 'mret'
@@ -113,20 +112,20 @@ void m_start(uintptr_t hartid, uintptr_t dtb) {
   // set M Exception Program Counter to sstart, for mret (requires gcc -mcmodel=medany)
   write_csr(mepc, (uint64)s_start);
 
-  // setup trap handling vector for machine mode. lab1_2
+  // setup trap handling vector for machine mode.
   write_csr(mtvec, (uint64)mtrapvec);
 
-  // enable machine-mode interrupts. added @lab1_3
+  // enable machine-mode interrupts.
   write_csr(mstatus, read_csr(mstatus) | MSTATUS_MIE);
 
   // delegate all interrupts and exceptions to supervisor mode.
   // delegate_traps() is defined above.
   delegate_traps();
 
-  // also enables interrupt handling in supervisor mode. added @lab1_3
+  // also enables interrupt handling in supervisor mode.
   write_csr(sie, read_csr(sie) | SIE_SEIE | SIE_STIE | SIE_SSIE);
 
-  // init timing. added @lab1_3
+  // init timing.
   timerinit(hartid);
 
   // switch to supervisor mode (S mode) and jump to s_start(), i.e., set pc to mepc

@@ -27,8 +27,6 @@ uint64 do_user_call(uint64 sysnum, uint64 a1, uint64 a2, uint64 a3, uint64 a4,
 }
 
 //
-// printu() supports user/lab1_1_helloworld.c
-//
 int printu(const char *s, ...)
 {
 	va_list vl;

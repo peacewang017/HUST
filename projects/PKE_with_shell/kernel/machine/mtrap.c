@@ -17,7 +17,6 @@ static void handle_misaligned_load() { panic("Misaligned Load!"); }
 
 static void handle_misaligned_store() { panic("Misaligned AMO!"); }
 
-// added @lab1_3
 static void handle_timer() {
   int hartid = read_tp();
   // setup the timer fired at next time (TIMER_INTERVAL from now)
@@ -45,8 +44,6 @@ void handle_mtrap() {
       handle_store_access_fault();
       break;
     case CAUSE_ILLEGAL_INSTRUCTION:
-      // TODO (lab1_2): call handle_illegal_instruction to implement illegal instruction
-      // interception, and finish lab1_2.
       handle_illegal_instruction();
       break;
     case CAUSE_MISALIGNED_LOAD:

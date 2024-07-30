@@ -1,5 +1,4 @@
 /*
- * The application of lab3_2.
  * parent and child processes intermittently give up their processors.
  */
 

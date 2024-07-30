@@ -49,15 +49,13 @@ ssize_t sys_user_scan(char *buf)
 ssize_t sys_user_exit(uint64 code)
 {
 	int hartid = (int)read_tp();
-	// reclaim the current process, and reschedule. added @lab3_1
+	// reclaim the current process, and reschedule.
 	sprint("User exit with code:%d.\n", code);
 	free_process(current[hartid]);
 	schedule();
 	return 0;
 }
 
-//
-// maybe, the simplest implementation of malloc in the world ... added @lab2_2
 //
 uint64 sys_user_allocate_page()
 {
@@ -84,7 +82,7 @@ uint64 sys_user_allocate_page()
 }
 
 //
-// reclaim a page, indicated by "va". added @lab2_2
+// reclaim a page, indicated by "va".
 //
 uint64 sys_user_free_page(uint64 va)
 {
@@ -107,15 +105,11 @@ ssize_t sys_user_fork()
 }
 
 //
-// kerenl entry point of yield. added @lab3_2
+// kerenl entry point of yield.
 //
 ssize_t sys_user_yield()
 {
 	int hartid = (int)read_tp();
-	// TODO (lab3_2): implment the syscall of yield.
-	// hint: the functionality of yield is to give up the processor. therefore,
-	// we should set the status of currently running process to READY, insert it in
-	// the rear of ready queue, and finally, schedule a READY process to run.
 	current[hartid]->status = READY;
 	from_blocked_to_ready(current[hartid]);
 	schedule();
@@ -336,7 +330,6 @@ int sys_user_sem_V(int index)
 	return V_semaphore(index);
 }
 
-// added lab3c3
 ssize_t sys_user_printpa(uint64 va)
 {
 	int hartid = read_tp();
@@ -361,7 +354,6 @@ long do_syscall(long a0, long a1, long a2, long a3, long a4, long a5, long a6,
 		return sys_user_print((const char *)a1, a2);
 	case SYS_user_exit:
 		return sys_user_exit(a1);
-	// added @lab2_2
 	case SYS_user_allocate_page:
 		return sys_user_allocate_page();
 	case SYS_user_free_page:
@@ -370,7 +362,6 @@ long do_syscall(long a0, long a1, long a2, long a3, long a4, long a5, long a6,
 		return sys_user_fork();
 	case SYS_user_yield:
 		return sys_user_yield();
-	// added @lab4_1
 	case SYS_user_open:
 		return sys_user_open((char *)a1, a2);
 	case SYS_user_read:
@@ -385,7 +376,6 @@ long do_syscall(long a0, long a1, long a2, long a3, long a4, long a5, long a6,
 		return sys_user_disk_stat(a1, (struct istat *)a2);
 	case SYS_user_close:
 		return sys_user_close(a1);
-	// added @lab4_2
 	case SYS_user_opendir:
 		return sys_user_opendir((char *)a1);
 	case SYS_user_readdir:
@@ -394,7 +384,6 @@ long do_syscall(long a0, long a1, long a2, long a3, long a4, long a5, long a6,
 		return sys_user_mkdir((char *)a1);
 	case SYS_user_closedir:
 		return sys_user_closedir(a1);
-	// added @lab4_3
 	case SYS_user_link:
 		return sys_user_link((char *)a1, (char *)a2);
 	case SYS_user_unlink:

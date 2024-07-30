@@ -1,5 +1,4 @@
 /*
- * Below is the given application for lab2_challenge2_singlepageheap.
  * This app performs malloc memory.
  */
 

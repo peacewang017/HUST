@@ -14,7 +14,6 @@
 
 //
 // the implementation of allocater. allocates memory space for later segment loading.
-// this allocater is heavily modified @lab2_1, where we do NOT work in bare mode.
 //
 static void *elf_alloc_mb(elf_ctx *ctx, uint64 elf_pa, uint64 elf_va,
 			  uint64 size)
@@ -120,7 +119,7 @@ elf_status elf_load(elf_ctx *ctx)
 		    ph_addr.memsz)
 			return EL_EIO;
 
-		// record the vm region in proc->mapped_info. added @lab3_1
+		// record the vm region in proc->mapped_info.
 		int j;
 		for (j = 0; j < PGSIZE / sizeof(mapped_region);
 		     j++) //seek the last mapped region
@@ -182,7 +181,6 @@ void load_bincode_from_vfs_elf(process *p, char *filename, int argc,
 	if (elf_load(&elfloader) != EL_OK)
 		panic("Fail on loading elf.\n");
 
-	// entry (virtual, also physical in lab1_x) address
 	p->trapframe->epc = elfloader.ehdr.entry;
 
 	// 设置argc，argv

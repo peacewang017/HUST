@@ -52,7 +52,7 @@
 #define CAUSE_LOAD_PAGE_FAULT 0xd // Load page fault
 #define CAUSE_STORE_PAGE_FAULT 0xf // Store/AMO page fault
 
-// irqs (interrupts). added @lab1_3
+// irqs (interrupts).
 #define CAUSE_MTIMER 0x8000000000000007
 #define CAUSE_MTIMER_S_TRAP 0x8000000000000001
 
@@ -198,7 +198,6 @@ typedef struct riscv_regs_t {
 	/* 240 */ uint64 t6;
 } riscv_regs;
 
-// following lines are added @lab2_1
 static inline void flush_tlb(void)
 {
 	asm volatile("sfence.vma zero, zero");

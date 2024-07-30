@@ -1,9 +1,6 @@
 /*
  * Utility functions for process management. 
  *
- * Note: in Lab1, only one process (i.e., our user application) exists. Therefore, 
- * PKE OS at this stage will set "current" to the loaded user application, and also
- * switch to the old "current" process after trap handling.
  */
 
 #include "riscv.h"
@@ -27,7 +24,7 @@ extern void return_to_user(trapframe *, uint64 satp);
 // of S-mode trap vector).
 extern char trap_sec_start[];
 
-// process pool. added @lab3_1
+// process pool.
 process procs[NCPU][NPROC];
 
 // current points to the currently running user-mode application.
@@ -69,17 +66,16 @@ void switch_to(process *proc)
 	// set S Exception Program Counter (sepc register) to the elf entry pc.
 	write_csr(sepc, proc->trapframe->epc);
 
-	// make user page table. macro MAKE_SATP is defined in kernel/riscv.h. added @lab2_1
+	// make user page table. macro MAKE_SATP is defined in kernel/riscv.h.
 	uint64 user_satp = MAKE_SATP(proc->pagetable);
 
 	// return_to_user() is defined in kernel/strap_vector.S. switch to user mode with sret.
-	// note, return_to_user takes two parameters @ and after lab2_1.
 	// print_proc_info(current);
 	return_to_user(proc->trapframe, user_satp);
 }
 
 //
-// initialize process pool (the procs[] array). added @lab3_1
+// initialize process pool (the procs[] array).
 //
 void init_proc_pool()
 {
@@ -101,7 +97,7 @@ void init_proc_pool()
 
 //
 // allocate an empty process, init its vm space. returns the pointer to
-// process strcuture. added @lab3_1
+// process strcuture.
 //
 process *alloc_process()
 {
@@ -196,7 +192,7 @@ process *alloc_process()
 }
 
 //
-// reclaim a process. added @lab3_1
+// reclaim a process.
 //
 int free_process(process *proc)
 {
@@ -213,7 +209,7 @@ int free_process(process *proc)
 }
 
 //
-// implements fork syscal in kernel. added @lab3_1
+// implements fork syscal in kernel.
 // basic idea here is to first allocate an empty process (child), then duplicate the
 // context and data segments of parent process to the child, and lastly, map other
 // segments (code, system) of the parent to child. the stack segment remains unchanged
@@ -282,15 +278,6 @@ int do_fork(process *parent)
 			break;
 		}
 		case CODE_SEGMENT: {
-			// TODO (lab3_1): implment the mapping of child code segment to parent's
-			// code segment.
-			// hint: the virtual address mapping of code segment is tracked in mapped_info
-			// page of parent's process structure. use the information in mapped_info to
-			// retrieve the virtual to physical mapping of code segment.
-			// after having the mapping information, just map the corresponding virtual
-			// address region of child to the physical pages that actually store the code
-			// segment of parent process.
-			// DO NOT COPY THE PHYSICAL PAGES, JUST MAP THEM.
 			uint64 pa =
 				lookup_pa(parent->pagetable,
 					  parent->mapped_info[CODE_SEGMENT].va);

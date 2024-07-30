@@ -1,5 +1,4 @@
 /*
- * Below is the given application for lab1_3.
  * This app performs a long loop, during which, timers are
  * generated and pop messages to our screen.
  */

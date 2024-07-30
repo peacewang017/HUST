@@ -1,5 +1,5 @@
 /*
- * Interface functions between VFS and host-fs. added @lab4_1.
+ * Interface functions between VFS and host-fs.
  */
 #include "hostfs.h"
 

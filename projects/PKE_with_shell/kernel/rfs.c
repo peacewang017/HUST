@@ -1,6 +1,6 @@
 /*
  * RFS (Ramdisk File System) is a customized simple file system installed in the
- * RAM disk. added @lab4_1.
+ * RAM disk.
  * Layout of the file system:
  *
  * ******** RFS MEM LAYOUT (112 BLOCKS) ****************
@@ -515,16 +515,6 @@ struct vinode *rfs_create(struct vinode *parent, struct dentry *sub_dentry)
 	if (free_dinode == NULL)
 		panic("rfs_create: no more free disk inode, we cannot create file.\n");
 
-	// initialize the states of the file being created
-
-	// TODO (lab4_1): implement the code for populating the disk inode (free_dinode)
-	// of a new file being created.
-	// hint:  members of free_dinode to be filled are:
-	// size, should be zero for a new file.
-	// type, see kernel/rfs.h and find the type for a rfs file.
-	// nlinks, i.e., the number of links.
-	// blocks, i.e., its block count.
-	// Note: DO NOT DELETE CODE BELOW PANIC.
 	free_dinode->size = 0;
 	free_dinode->type = R_FILE;
 	free_dinode->nlinks = 1;
@@ -617,21 +607,6 @@ int rfs_disk_stat(struct vinode *vinode, struct istat *istat)
 int rfs_link(struct vinode *parent, struct dentry *sub_dentry,
 	     struct vinode *link_node)
 {
-	// TODO (lab4_3): we now need to establish a hard link to an existing file whose vfs
-	// inode is "link_node". To do that, we need first to know the name of the new (link)
-	// file, and then, we need to increase the link count of the existing file. Lastly,
-	// we need to make the changes persistent to disk. To know the name of the new (link)
-	// file, you need to stuty the structure of dentry, that contains the name member;
-	// To incease the link count of the existing file, you need to study the structure of
-	// vfs inode, since it contains the inode information of the existing file.
-	//
-	// hint: to accomplish this experiment, you need to:
-	// 1) increase the link count of the file to be hard-linked;
-	// 2) append the new (link) file as a dentry to its parent directory; you can use
-	//    rfs_add_direntry here.
-	// 3) persistent the changes to disk. you can use rfs_write_back_vinode here.
-	//
-
 	// get new link file name
 	char *name_new_link_file = sub_dentry->name;
 
@@ -843,14 +818,6 @@ int rfs_readdir(struct vinode *dir_vinode, struct dir *dir, int *offset)
 		(struct rfs_dir_cache *)dir_vinode->i_fs_info;
 	struct rfs_direntry *p_direntry =
 		dir_cache->dir_base_addr + direntry_index;
-
-	// TODO (lab4_2): implement the code to read a directory entry.
-	// hint: in the above code, we had found the directory entry that located at the
-	// *offset, and used p_direntry to point it.
-	// in the remaining processing, we need to return our discovery.
-	// the method of returning is to popular proper members of "dir", more specifically,
-	// dir->name and dir->inum.
-	// note: DO NOT DELETE CODE BELOW PANIC.
 
 	strcpy(dir->name, p_direntry->name);
 	dir->name[RFS_MAX_FILE_NAME_LEN - 1] = '\0';

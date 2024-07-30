@@ -15,7 +15,7 @@ typedef struct trapframe_t {
 	// saved user process counter
 	/* offset:264 */ uint64 epc;
 
-	// kernel page table. added @lab2_1
+	// kernel page table.
 	/* offset:272 */ uint64 kernel_satp;
 } trapframe;
 
@@ -77,7 +77,6 @@ typedef struct process_heap_manager {
 	uint32 free_pages_count;
 } process_heap_manager;
 
-// the extremely simple definition of process, used for begining labs of PKE
 typedef struct process_t {
 	// pointing to the stack used in trap handling.
 	uint64 kstack;
@@ -86,7 +85,7 @@ typedef struct process_t {
 	// trapframe storing the context of a (User mode) process.
 	trapframe *trapframe;
 
-	// points to a page that contains mapped_regions. below are added @lab3_1
+	// points to a page that contains mapped_regions.
 	mapped_region *mapped_info;
 	// next free mapped region in mapped_info
 	int total_mapped_region;
@@ -103,10 +102,10 @@ typedef struct process_t {
 	// next queue element
 	struct process_t *queue_next;
 
-	// accounting. added @lab3_3
+	// accounting.
 	int tick_count;
 
-	// file system. added @lab4_1
+	// file system.
 	proc_file_management *pfiles;
 
 	// for wait()

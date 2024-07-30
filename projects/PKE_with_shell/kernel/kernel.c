@@ -19,12 +19,12 @@
 
 //
 // trap_sec_start points to the beginning of S-mode trap segment (i.e., the entry point of
-// S-mode trap vector). added @lab2_1
+// S-mode trap vector).
 //
 extern char trap_sec_start[];
 
 //
-// turn on paging. added @lab2_1
+// turn on paging.
 //
 void enable_paging()
 {
@@ -111,9 +111,6 @@ int s_start(void)
 {
 	int hartid = (int)read_tp();
 	sprint("Hartid = %d: Enter supervisor mode...\n", hartid);
-	// in the beginning, we use Bare mode (direct) memory mapping as in lab1.
-	// but now, we are going to switch to the paging mode @lab2_1.
-	// note, the code still works in Bare mode when calling pmm_init() and kern_vm_init().
 	write_csr(satp, 0);
 
 	static volatile int sync_counter = 0;
@@ -126,19 +123,13 @@ int s_start(void)
 	}
 
 	sync_barrier(&sync_counter, NCPU);
-
-	// now, switch to paging mode by turning on paging (SV39)
 	enable_paging();
-
-	// the code now formally works in paging mode, meaning the page table is now in use.
 	sprint("kernel page table is on \n");
-
-	// added @lab3_1
 	init_proc_pool();
 
 	static volatile int sync_counter_2 = 0;
 
-	// init file system, added @lab4_1
+	// init file system
 	if (hartid == 0) {
 		fs_init();
 	}
@@ -147,7 +138,6 @@ int s_start(void)
 
 	sprint("Switch to user mode...\n");
 	// the application code (elf) is first loaded into memory, and then put into execution
-	// added @lab3_1
 	if (hartid == 0) {
 		insert_to_ready_queue(load_user_program());
 	} else {
@@ -155,7 +145,5 @@ int s_start(void)
 	}
 
 	schedule();
-
-	// we should never reach here.
 	return 0;
 }
