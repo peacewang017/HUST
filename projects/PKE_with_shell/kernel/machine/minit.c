@@ -20,7 +20,7 @@ __attribute__((aligned(16))) char stack0[4096 * NCPU];
 
 // sstart() is the supervisor state entry point defined in kernel/kernel.c
 extern void s_start();
-// M-mode trap entry point, added @lab1_2
+// M-mode trap entry point
 extern void mtrapvec();
 
 // htif is defined in spike_interface/spike_htif.c, marks the availability of HTIF
@@ -28,7 +28,7 @@ extern uint64 htif;
 // g_mem_size is defined in spike_interface/spike_memory.c, size of the emulated memory
 extern uint64 g_mem_size;
 // struct riscv_regs is define in kernel/riscv.h, and g_itrframe is used to save
-// registers when interrupt hapens in M mode. added @lab1_2
+// registers when interrupt hapens in M mode
 riscv_regs g_itrframe;
 
 //
@@ -78,7 +78,7 @@ static void delegate_traps() {
 }
 
 //
-// enabling timer interrupt (irq) in Machine mode. added @lab1_3
+// enabling timer interrupt (irq) in Machine mode.
 //
 void timerinit(uintptr_t hartid) {
   // fire timer irq after TIMER_INTERVAL from now.
@@ -113,7 +113,7 @@ void m_start(uintptr_t hartid, uintptr_t dtb) {
   // set M Exception Program Counter to sstart, for mret (requires gcc -mcmodel=medany)
   write_csr(mepc, (uint64)s_start);
 
-  // setup trap handling vector for machine mode. added @lab1_2
+  // setup trap handling vector for machine mode. lab1_2
   write_csr(mtvec, (uint64)mtrapvec);
 
   // enable machine-mode interrupts. added @lab1_3

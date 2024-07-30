@@ -1,5 +1,5 @@
 /*
- * VFS (Virtual File System) interface utilities. added @lab4_1.
+ * VFS (Virtual File System) interface utilities.
  */
 
 #include "vfs.h"
