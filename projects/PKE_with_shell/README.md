@@ -1,6 +1,6 @@
-# 华中科技大学操作系统课程设计
+# Proxy Kernel
 
-基于 Spike emulator 和 ProxyKernel
+基于 Spike emulator 和 RISC-V Proxy Kernel
 
 ## 1 单元测试
 有以下单元测试：
